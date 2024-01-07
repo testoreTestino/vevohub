@@ -1,4 +1,4 @@
-package com.vevohub.integrator.database.service;
+package com.vevohub.integrator.service;
 
 import com.vevohub.integrator.api.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         var user = userService.findByEmail(userName).orElseThrow();
+
+        //TODO: Modify hardcoded value when we design roles in the UI.
+
         user.setRole("USER_ADMIN");
 
         return UserPrincipal.builder()

@@ -1,8 +1,7 @@
-package com.vevohub.integrator.database.service;
+package com.vevohub.integrator.service;
 
 import com.vevohub.integrator.database.dao.UserRepository;
 import com.vevohub.integrator.database.entity.UserEntity;
-import com.vevohub.integrator.database.entity.UserEntitydoi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    private static final String EXISTING_EMAIL = "test@test.com";
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 

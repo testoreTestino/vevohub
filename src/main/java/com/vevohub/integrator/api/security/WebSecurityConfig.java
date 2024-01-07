@@ -1,6 +1,6 @@
 package com.vevohub.integrator.api.security;
 
-import com.vevohub.integrator.database.service.CustomUserDetailsService;
+import com.vevohub.integrator.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
