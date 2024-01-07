@@ -1,4 +1,4 @@
-package com.vevohub.integrator.models;
+package com.vevohub.integrator.api.models;
 
 import lombok.Builder;
 import lombok.Getter;
