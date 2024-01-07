@@ -16,17 +16,18 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
 
-    private final UserServicedoi userService;
+    private final UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         var user = userService.findByEmail(userName).orElseThrow();
+        user.setRole("USER_ADMIN");
 
         return UserPrincipal.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
                 .authorities(List.of(new SimpleGrantedAuthority(user.getRole())))
-                .password(user.getPassword())
+                .password(user.getPasswordHash())
                 .build();
     }
 }

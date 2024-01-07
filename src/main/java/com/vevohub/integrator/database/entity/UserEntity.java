@@ -19,4 +19,6 @@ public class UserEntity {
     private String passwordHash; // Corresponds to password_hash in the table
     private String email;
 
+    private String role;
+
 }
