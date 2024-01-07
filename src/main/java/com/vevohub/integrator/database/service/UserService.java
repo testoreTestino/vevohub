@@ -20,9 +20,5 @@ public class UserService {
         userEntity.setPasswordHash(bCryptPasswordEncoder.encode(userEntity.getPasswordHash()));
         return userRepository.save(userEntity);
     }
-//
-//     public Optional<>{
-//
-//    }
 
 }

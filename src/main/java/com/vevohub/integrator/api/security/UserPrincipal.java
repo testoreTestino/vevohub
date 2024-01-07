@@ -1,5 +1,6 @@
 package com.vevohub.integrator.api.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,9 @@ public class UserPrincipal implements UserDetails {
     private final String email;
     private final Collection<? extends GrantedAuthority> authorities;
 
+    @JsonIgnore
+    private final String password;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -22,7 +26,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
