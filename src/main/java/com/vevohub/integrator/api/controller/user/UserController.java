@@ -1,13 +1,15 @@
-package com.vevohub.integrator.api.user;
+package com.vevohub.integrator.api.controller.user;
 
 import com.vevohub.integrator.api.security.JwtIssuer;
-import com.vevohub.integrator.logic.UserService;
-import com.vevohub.integrator.models.LoginRequest;
-import com.vevohub.integrator.models.LoginResponse;
-import com.vevohub.integrator.models.User;
+import com.vevohub.integrator.api.security.UserPrincipal;
+import com.vevohub.integrator.database.entity.UserEntity;
+import com.vevohub.integrator.database.service.UserService;
+import com.vevohub.integrator.api.models.LoginRequest;
+import com.vevohub.integrator.api.models.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +28,9 @@ public class UserController {
     private final JwtIssuer jwtIssuer;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
-        return ResponseEntity.ok(registeredUser); // In real applications, don't return the full user object
+    public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
+        UserEntity registeredUserEntity = userService.registerUser(user);
+        return ResponseEntity.ok(registeredUserEntity); // In real applications, don't return the full user object
     }
 
 
@@ -39,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<?> testEndpoint() {
-        return ResponseEntity.ok("{\"message\": \"test\"}");
+    public String testEndpoint(@AuthenticationPrincipal UserPrincipal principal) {
+        return "If you see this " + principal.getEmail() + " User ID:" + principal.getUserId();
     }
 }

@@ -23,3 +23,7 @@ trello:
     token: ATTA6babb22bbfe49196374ce2cf8b1699357de74a1407b6eb7034f65f45ca093171EBB5E9E6
   list:
     id: 6429ab9b8f9f45122fb5ce8c
+
+security:
+  jwt:
+    secret-key: verysecretkey
