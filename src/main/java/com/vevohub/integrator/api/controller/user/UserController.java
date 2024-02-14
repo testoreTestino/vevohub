@@ -45,4 +45,9 @@ public class UserController {
     public String testEndpoint(@AuthenticationPrincipal UserPrincipal principal) {
         return "If you see this " + principal.getEmail() + " User ID:" + principal.getUserId();
     }
+
+    @GetMapping("/")
+    public String greeting() {
+        return "Hello";
+    }
 }

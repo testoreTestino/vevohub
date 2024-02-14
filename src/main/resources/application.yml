@@ -1,9 +1,9 @@
 spring:
   datasource:
     #    url: jdbc:postgresql://localhost/trello_vevohub?currentSchema=vevohub
-    url: jdbc:postgresql://mydatabase.cjmecec0ss3p.eu-north-1.rds.amazonaws.com:5432/postgres?currentSchema=vevohub
+    url: jdbc:postgresql://vevohub-database.cjmecec0ss3p.eu-north-1.rds.amazonaws.com:5432/postgres?currentSchema=vevohub
     username: postgres
-    password: postgres
+    password: cartman92
   jpa:
     show-sql: true
     hibernate:
