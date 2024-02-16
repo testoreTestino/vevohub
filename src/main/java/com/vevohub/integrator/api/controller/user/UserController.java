@@ -2,8 +2,10 @@ package com.vevohub.integrator.api.controller.user;
 
 import com.vevohub.integrator.api.security.JwtIssuer;
 import com.vevohub.integrator.api.security.UserPrincipal;
+import com.vevohub.integrator.database.entity.CandidatesEntity;
 import com.vevohub.integrator.database.entity.UserEntity;
 import com.vevohub.integrator.service.AuthService;
+import com.vevohub.integrator.service.CandidatesService;
 import com.vevohub.integrator.service.UserService;
 import com.vevohub.integrator.api.models.LoginRequest;
 import com.vevohub.integrator.api.models.LoginResponse;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -29,6 +33,9 @@ public class UserController {
     private UserService userService;
 
     private final AuthService authService;
+
+    @Autowired
+    private CandidatesService candidatesService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
@@ -49,5 +56,15 @@ public class UserController {
     @GetMapping("/")
     public String greeting() {
         return "Hello";
+    }
+
+    @GetMapping("/users")
+    public List<UserEntity> getUsers() {
+        return userService.findAll();
+    }
+
+    @GetMapping("/candidates")
+    public List<CandidatesEntity> getCandidates() {
+        return candidatesService.findAll();
     }
 }
