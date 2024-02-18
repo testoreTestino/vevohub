@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    #    url: jdbc:postgresql://localhost/trello_vevohub?currentSchema=vevohub
+    url: jdbc:postgresql://vevohub-database.cjmecec0ss3p.eu-north-1.rds.amazonaws.com:5432/postgres?currentSchema=vevohub
+    username: postgres
+    password: cartman92
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+trello:
+  api:
+    key: de9082376c8395413d3e65a56a30fa42
+    token: ATTA6babb22bbfe49196374ce2cf8b1699357de74a1407b6eb7034f65f45ca093171EBB5E9E6
+  list:
+    id: 6429ab9b8f9f45122fb5ce8c
+
+security:
+  jwt:
+    secret-key: verysecretkey
