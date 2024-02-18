@@ -63,8 +63,4 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("/candidates")
-    public List<CandidatesEntity> getCandidates() {
-        return candidatesService.findAll();
-    }
 }

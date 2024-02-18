@@ -27,5 +27,5 @@ public class CandidatesEntity {
     private String feedback;
     private String status;
     private String details;
-
+    private Boolean isChecked;
 }
