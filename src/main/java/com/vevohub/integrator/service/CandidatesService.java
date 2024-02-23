@@ -42,4 +42,8 @@ public class CandidatesService {
     public List<String> findAllPositions() {
         return candidatesRepository.findAllDistinctProfiles();
     }
+
+    public CandidatesEntity createNewCandidate(CandidatesEntity createCandidateRequest) {
+        return candidatesRepository.save(createCandidateRequest);
+    }
 }

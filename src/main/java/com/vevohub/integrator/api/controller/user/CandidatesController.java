@@ -4,9 +4,9 @@ import com.vevohub.integrator.database.entity.CandidatesEntity;
 import com.vevohub.integrator.service.CandidatesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +35,12 @@ public class CandidatesController {
             return candidatesService.findByPositionName(position);
         }
         return candidatesService.findAllPositions();
+    }
+
+    @PostMapping("/create/candidate")
+    public ResponseEntity<?> createCandidate(@RequestBody @Validated CandidatesEntity createCandidateRequest) {
+
+        CandidatesEntity submitNewCandidate = candidatesService.createNewCandidate(createCandidateRequest);
+        return ResponseEntity.ok(createCandidateRequest);
     }
 }
