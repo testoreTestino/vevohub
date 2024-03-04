@@ -1,7 +1,9 @@
 package com.vevohub.integrator.service;
 
+import com.vevohub.integrator.database.dto.UserEmailUserNameDto;
 import com.vevohub.integrator.database.dao.UserRepository;
 import com.vevohub.integrator.database.entity.UserEntity;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,9 @@ public class UserService {
 
     public List<UserEntity> findAll() {
         return userRepository.findAll();
+    }
+
+    public Optional<UserEmailUserNameDto> findUserByEmail(String email) {
+        return Optional.ofNullable(userRepository.findUserByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email)));
     }
 }

@@ -43,4 +43,14 @@ public class CandidatesController {
         CandidatesEntity submitNewCandidate = candidatesService.createNewCandidate(createCandidateRequest);
         return ResponseEntity.ok(createCandidateRequest);
     }
+
+    @GetMapping("/profiles")
+    public List<Object[]> getDistinctProfilesAndNamesByProfilesAndPattern(@RequestParam List<String> profiles, @RequestParam String namePattern) {
+        return candidatesService.findDistinctProfilesAndNamesByProfilesAndPattern(profiles, namePattern);
+    }
+
+    @GetMapping("/profiles/positions")
+    public List<CandidatesEntity> getProfiles(@RequestParam(required = true) String position) {
+        return candidatesService.finByProfileContainingPattern(position);
+    }
 }
