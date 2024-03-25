@@ -1,11 +1,18 @@
 package com.vevohub.integrator.database;
 
+import com.vevohub.integrator.database.dao.CandidatesRepository;
+import com.vevohub.integrator.database.entity.CandidatesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class DatabaseInit {
+
+
+    @Autowired
+    private CandidatesRepository candidatesRepository;
+
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -27,9 +34,4 @@ public class DatabaseInit {
         }
     }
 
-    public void insertNewCard(String cardName) {
-        String sql = "INSERT INTO vevohub.professional_contacts (name) VALUES (?)";
-        jdbcTemplate.update(sql, cardName);
-        System.out.println("Inserted new card into database: " + cardName);
-    }
 }

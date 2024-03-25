@@ -3,11 +3,13 @@ package com.vevohub.integrator.database.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "candidates")
 @Getter
 @Setter
+@ToString
 public class CandidatesEntity {
 
     @Id

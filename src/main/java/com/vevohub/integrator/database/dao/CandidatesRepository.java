@@ -36,4 +36,11 @@ public interface CandidatesRepository extends JpaRepository<CandidatesEntity, Lo
 
     @Query("SELECT DISTINCT c.profile FROM CandidatesEntity c WHERE c.profile LIKE %:pattern%")
     List<String> findDistinctProfilesByPattern(@Param("pattern") String pattern);
+
+    @Query("SELECT DISTINCT c.profile, c.fullNameCandidate FROM CandidatesEntity c WHERE c.profile IN :profiles AND c.fullNameCandidate LIKE %:namePattern%")
+    List<Object[]> findDistinctProfilesAndNamesByProfilesAndPattern(@Param("profiles") List<String> profiles, @Param("namePattern") String namePattern);
+
+    @Query("SELECT c FROM CandidatesEntity c WHERE c.profile LIKE %:pattern%")
+    List<CandidatesEntity> findByProfileContaining(@Param("pattern") String pattern);
+
 }
