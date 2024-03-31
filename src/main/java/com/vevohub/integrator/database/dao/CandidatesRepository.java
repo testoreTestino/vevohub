@@ -23,13 +23,9 @@ public interface CandidatesRepository extends JpaRepository<CandidatesEntity, Lo
 
     List<CandidatesEntity> findAll();
 
-    List<CandidatesEntity> findByRecruiter(String recruiter);
+
     //TODO: Modify the column fullNameCandidate
-
     List<CandidatesEntity> findByFullNameCandidateStartingWith(String fullNameCandidate);
-
-
-    List<CandidatesEntity> findByIsChecked(Boolean isChecked);
 
     @Query("SELECT DISTINCT c.profile FROM CandidatesEntity c")
     List<String> findAllDistinctProfiles();
@@ -37,10 +33,10 @@ public interface CandidatesRepository extends JpaRepository<CandidatesEntity, Lo
     @Query("SELECT DISTINCT c.profile FROM CandidatesEntity c WHERE c.profile LIKE %:pattern%")
     List<String> findDistinctProfilesByPattern(@Param("pattern") String pattern);
 
-    @Query("SELECT DISTINCT c.profile, c.fullNameCandidate FROM CandidatesEntity c WHERE c.profile IN :profiles AND c.fullNameCandidate LIKE %:namePattern%")
-    List<Object[]> findDistinctProfilesAndNamesByProfilesAndPattern(@Param("profiles") List<String> profiles, @Param("namePattern") String namePattern);
+    @Query(value = "SELECT c FROM CandidatesEntity c WHERE c.profile IN :profiles AND c.fullNameCandidate LIKE %:namePattern%")
+    List<CandidatesEntity> findByProfilesAndNamePattern(@Param("profiles") List<String> profiles, @Param("namePattern") String namePattern);
 
-    @Query("SELECT c FROM CandidatesEntity c WHERE c.profile LIKE %:pattern%")
-    List<CandidatesEntity> findByProfileContaining(@Param("pattern") String pattern);
+    @Query(value = "SELECT c FROM CandidatesEntity c WHERE c.profile IN :profiles")
+    List<CandidatesEntity> findByProfileContaining(@Param("profiles") List<String> pattern);
 
 }
