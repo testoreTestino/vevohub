@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,23 +19,25 @@ public class CandidatesController {
     private CandidatesService candidatesService;
 
     @GetMapping("/candidates")
-    public List<CandidatesEntity> getCandidates(@RequestParam(required = false) String recruiter, @RequestParam(required = false) String fullNameCandidate, @RequestParam(required = false) Boolean isChecked) {
-        if (recruiter != null && !recruiter.isEmpty()) {
-            return candidatesService.findByRecruiter(recruiter);
-        } else if (fullNameCandidate != null && !fullNameCandidate.isEmpty()) {
-            return candidatesService.findByFullNameCandidate(fullNameCandidate);
-        } else if (isChecked != null) {
-            return candidatesService.findByIsChecked(isChecked);
-        }
-        return candidatesService.findAll();
-    }
+    public ResponseEntity<?> getCandidates(
+            @RequestParam(required = false) String fullNameCandidate,
+            @RequestParam(required = false) List<String> profiles,
+            @RequestParam(required = false) String namePattern) {
 
-    @GetMapping("/positions")
-    public List<String> getCandidates(@RequestParam(required = false) String position) {
-        if (position != null) {
-            return candidatesService.findByPositionName(position);
+        // Check for distinct profiles and names by profiles and pattern
+        if (profiles != null && !profiles.isEmpty() && namePattern != null && !namePattern.isEmpty()) {
+            return ResponseEntity.ok(candidatesService.findDistinctProfilesAndNamesByProfilesAndPattern(profiles, namePattern));
         }
-        return candidatesService.findAllPositions();
+
+        if (profiles != null && !profiles.isEmpty() && (fullNameCandidate == null || fullNameCandidate.isEmpty()) && (namePattern == null || namePattern.isEmpty())) {
+            return ResponseEntity.ok(candidatesService.finByProfileContainingPattern(profiles));
+        }
+
+        if (fullNameCandidate != null && !fullNameCandidate.isEmpty()) {
+            return ResponseEntity.ok(candidatesService.findByFullNameCandidate(fullNameCandidate));
+        }
+
+        return ResponseEntity.ok(candidatesService.findAll());
     }
 
     @PostMapping("/create/candidate")
@@ -45,12 +48,30 @@ public class CandidatesController {
     }
 
     @GetMapping("/profiles")
-    public List<Object[]> getDistinctProfilesAndNamesByProfilesAndPattern(@RequestParam List<String> profiles, @RequestParam String namePattern) {
+    public List<CandidatesEntity> getDistinctProfilesAndNamesByProfilesAndPattern(@RequestParam List<String> profiles, @RequestParam String namePattern) {
         return candidatesService.findDistinctProfilesAndNamesByProfilesAndPattern(profiles, namePattern);
     }
 
-    @GetMapping("/profiles/positions")
-    public List<CandidatesEntity> getProfiles(@RequestParam(required = true) String position) {
-        return candidatesService.finByProfileContainingPattern(position);
+    @GetMapping("/candidates/positions")
+    public List<String> getProfiles() {
+        return candidatesService.findAllPositions();
+    }
+
+    @DeleteMapping("/candidates/{id}")
+    public ResponseEntity<?> deleteCandidateById(@PathVariable Long id) {
+        // Check if the candidate exists before attempting to delete to provide a clearer error message if not
+        if (!candidatesService.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        candidatesService.deleteCandidateById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/candidates/{id}")
+    public Optional<CandidatesEntity> findCandidateById(@PathVariable Long id) {
+
+        return candidatesService.findById(id);
+
     }
 }
